@@ -1,39 +1,29 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ReactDOM from "react-dom";
 
-function TodoApp() {
-  const [textInput, setTextInput] = useState("");
-  const [tasks, setTasks] = useState(["clean car"]);
+function CryptoById() {
+  const [cryptoId, setCryptoId] = useState("");
+  const [price, setPrice] = useState(0);
 
-  function handleChange(e) {
-    setTextInput(e.target.value);
+  function handlerCryptoId(e) {
+    setCryptoId(e.target.value);
   }
 
-  function handleAddTask() {
-    setTasks([...tasks, textInput]);
-  }
-
-  function handleDone(taskIndex) {
-    setTasks(tasks.filter((value, index) => index !== taskIndex));
+  async function getCrypto(id) {
+    const response = await fetch(
+      `https://api.coingecko.com/api/v3/simple/price?ids=${id}&vs_currencies=usd`
+    );
+    const json = await response.json();
+    setPrice(json[id].usd);
   }
 
   return (
     <>
-      <h1>To Do</h1>
-      <input onChange={handleChange} type="text" value={textInput} />
-      <button onClick={handleAddTask}>Add</button>
-      {tasks ? (
-        <ul>
-          {tasks.map((task, index) => (
-            <li key={index}>
-              <button onClick={() => handleDone(index)}>Done</button>
-              {task}
-            </li>
-          ))}
-        </ul>
-      ) : null}
+      <h1>Crypto By Id</h1>
+      <input type="text" onChange={handlerCryptoId} />
+      <button onClick={() => getCrypto(cryptoId)}>Go</button>
+      <h2>Price: {price}</h2>
     </>
   );
 }
-
-ReactDOM.render(<TodoApp />, document.getElementById("root"));
+ReactDOM.render(<CryptoById />, document.getElementById("root"));
