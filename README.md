@@ -1,9 +1,11 @@
 # Crypto By Id
 
-Build a barebones Crypto on click app.
+Build a barebones Crypto price lookup page.
 
-The user enters the crypto id in a text field and clicks the button Go.
-the price of the crypto should display:
+1. The user enters the crypto id in a text field, then clicks the **_Go_** button.
+2. The price of the crypto should display:
+
+API Call:
 
 https://api.coingecko.com/api/v3/simple/price?ids=[id]&vs_currencies=usd
 
